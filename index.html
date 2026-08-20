@@ -1,12 +1,201 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Simple Website</title>
+    <title>leafsec</title>
+    <style>
+        hr {
+            border-style: dashed;
+            border-width: 2px;
+            border-color: #8b8b8b;
+        }
+        html {
+            min-height: 100vh;
+            min-height: 100svh;
+            background-image: url('images2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }   
+
+       
+
+        body {
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 40px);
+            min-height: calc(100svh - 40px);
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .body {
+            max-width: 600px;
+        }
+
+        .container {
+            box-shadow: 25px 25px 50px 0 rgba(255, 255, 255, 0.61);
+            margin: auto;
+            background: white;
+            border-radius: 20px;
+            border-width: 20px;
+            border-style: solid;
+            border-color: white;
+        }
+
+        .icon {
+            border-radius: 50%;
+            margin-top: 10px;
+            float: right;
+            max-width: 150px;
+            width: 30%;
+            height: auto;
+        }
+
+        .social-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .social-content {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        details > summary {
+            list-style: none;
+        }
+
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+
+        a {
+            color: #ff6b6b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #4e82ea;
+        }
+
+        .navigation {
+            text-align: right;
+        }
+
+        .navigation a {
+            padding: 0 10px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .header h1 {
+            margin-bottom: 0;
+        }
+
+        .footer {
+            text-align: center;
+        }
+
+        /* Table Styles */
+        .table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 20px;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px dashed #8b8b8b;
+        }
+
+        .table th {
+            background-color: #ff9999;
+            color: white;
+            font-weight: bold;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #fff3f3;
+        }
+
+        .table tr:nth-child(odd) {
+            background-color: white;
+        }
+
+        .table tr:hover {
+            background-color: #ffe6e6;
+            transition: background-color 0.3s ease;
+        }
+
+        .table thead tr:first-child th:first-child {
+            border-top-left-radius: 10px;
+        }
+
+        .table thead tr:first-child th:last-child {
+            border-top-right-radius: 10px;
+        }
+
+        .table tbody tr:last-child td:first-child {
+            border-bottom-left-radius: 10px;
+        }
+
+        .table tbody tr:last-child td:last-child {
+            border-bottom-right-radius: 10px;
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: bold;
+        }
+
+        .bg-success {
+            background-color: #99ff99;
+            color: #8b8b8b;
+        }
+
+        .bg-danger {
+            background-color: #ff9999;
+            color: #fff3f3;
+        }
+
+        .bg-warning {
+            background-color: #ffcc99;
+            color: #8b8b8b;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to My Simple Website</h1>
-    <p>This is a very short and basic HTML webpage. i am testing it</p>
+    <div class="container">
+        <h1 class="center">Welcome to leafsec!</h1>
+        <a href="./blog">/blog</a> <a href="./ctf_teammates">/ctf_teammates</a>
+        <p>I am Mateo, a 16 year old bug bounty hunter and ctf player</p>
+        <p>Some of my accomplishments are:</p>
+        <ul>
+            <li>Hacking mutliple fortune 500 companys including google, carnival, paysafe, and others</li>
+            <li>Doing non payed vulnriable disclose for the NSA, USDA, fiserv, and aeromexico</li>
+            <li>hackthebox cbbh role path</li>
+            <li>Compeating in the defcon 33 finals</li>
+        </ul>
+        <p>reach out to me via admin@leafsec.net or via discord @pomitly</p>
+        <p>ctf team + blog coming soon...</p>
+    </div>
 </body>
 </html>
