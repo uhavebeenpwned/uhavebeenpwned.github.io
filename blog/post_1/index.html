@@ -16,9 +16,7 @@
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-        }   
-
-       
+        }
 
         body {
             display: flex;
@@ -29,24 +27,54 @@
             min-height: calc(100svh - 40px);
             margin: 0;
             padding: 20px;
-        }
-
-        h1 {
-            margin-top: 0;
-        }
-
-        .body {
-            max-width: 600px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         .container {
-            box-shadow: 25px 25px 50px 0 rgba(255, 255, 255, 0.61);
+            max-width: 720px;
             margin: auto;
             background: white;
             border-radius: 20px;
             border-width: 20px;
             border-style: solid;
             border-color: white;
+            box-shadow: 25px 25px 50px 0 rgba(255, 255, 255, 0.61);
+        }
+
+        .container > h1:first-child {
+            text-align: center;
+            font-size: 1.8rem;
+            border-bottom: none;
+            color: #FF007F;
+            margin-top: 0;
+        }
+
+        .container h1 {
+            text-align: left;
+            font-size: 1.4rem;
+            margin-top: 2.5rem;
+            margin-bottom: 0.5rem;
+            border-bottom: 2px dashed #8b8b8b;
+            padding-bottom: 0.4rem;
+            color: #333;
+        }
+
+        .container p {
+            max-width: 65ch;
+            line-height: 1.65;
+            font-size: 1.05rem;
+            color: #222;
+            margin: 0 auto 1.2rem auto;
+            white-space: pre-line;
+        }
+
+        .container p code,
+        .container p pre {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+            font-size: 0.95rem;
         }
 
         .icon {
@@ -109,7 +137,6 @@
             text-align: center;
         }
 
-        /* Table Styles */
         .table {
             width: 100%;
             border-collapse: separate;
@@ -184,37 +211,41 @@
 </head>
 <body>
     <div class="container">
-      <h1 style="text-align: center; color: #FF007F;">CSS injection + open redirect bug bounty writeup - By pomitly</h1>
+      <h1>CSS injection + open redirect bug bounty writeup - By pomitly</h1>
 
-      <h1 style="text-align: center;">tldr;</h1>
-      <p style="white-space: pre-line;">An annoyingish attack chain to get css injection + open redirect + a cool ZWSP trick to fail login</p>
+      <h1>tldr;</h1>
+      <p>An annoyingish attack chain to get css injection + open redirect + a cool ZWSP trick to fail login</p>
 
-      <h1 style="text-align: center;">The target</h1>
-      <p style="white-space: pre-line;">As this was a private invite, I cant due to policy state the name of the program.  What I can say was that it was a fortune company in the vacation industry.  
+      <h1>The target</h1>
+      <p>As this was a private invite, I cant due to policy state the name of the program.  What I can say was that it was a fortune company in the vacation industry.
 The site I was targeting was in charge of handling the login for all general staff for this company.</p>
 
-      <h1 style="text-align: center;">Step 1 - finding the open redirect</h1>
-      <p style="white-space: pre-line;">This step was the easiest of the bunch, I found it as just as you would any other open redirect.  There was a parameter in the url named something like: error_url=.
+      <h1>Step 1 - finding the open redirect</h1>
+      <p>This step was the easiest of the bunch, I found it as just as you would any other open redirect.  There was a parameter in the url named something like: error_url=.
 To which - though normally set back onto the site - an attacker can change to any website.  The issue with this is that an it only fires IF an error occurs with
 the login process.  That is were the next bug comes into play</p>
 
-      <h1 style="text-align: center;">Step 2 - forcing an error</h1>
-      <p style="white-space: pre-line;">Though an error does trigger if the user enters incorrect credentials onto the website, this is unlikely to occur, and such is a pretty useless finding.  There was open
+      <h1>Step 2 - forcing an error</h1>
+      <p>Though an error does trigger if the user enters incorrect credentials onto the website, this is unlikely to occur, and such is a pretty useless finding.  There was open
 other parameter though in the url that caught my eye: username=.  Though this would usually be harmless under normal curcumstances - all it does is automaticly embed whatever
-username you put in there as the user in the login parameter - we can use it to our advantage here.  Remember how the last bug, the open redirect, only triggers
+username you put in there as the user in the login parameter - we can use it to our advantage here.</p>
+      <p>Remember how the last bug, the open redirect, only triggers
 during errors?  What I though to do was to FORCE an error through embeding the users expected username with... basicly nothing.  Or so it would appear.  One cool
 thing about unicode, is that it offers a very wide veriety of characters to choice from, one of which being the zero width space.  View one at https://unicode-explorer.com/c/200B.
-Its ID, for those who care, is U+200B.  Using this zero width space we can inject it
+Its ID, for those who care, is U+200B.</p>
+      <p>Using this zero width space we can inject it
 into the username= parameter and FORCE the login to error out every time.  Say we are sending this exploit email to a user named carlos.  We would send them a url
 with the username=carl<insert zero width space char here>os.  Now when they go to login, there username is embedded and appears exactly the same to them, but the server
-itself recognizes it as distinct and gives you an incorrect login error every time.  Chain that with the formerly useless open redirect, and now we have a good open
+itself recognizes it as distinct and gives you an incorrect login error every time.</p>
+      <p>Chain that with the formerly useless open redirect, and now we have a good open
 redirect at the login page.</p>
 
-      <h1 style="text-align: center;">Step 3 - increasing exploit believability and impact with css injection.</h1>
-      <p style="white-space: pre-line;">The issue with the 2 exploits above is that it gives the user no reason to understand WHY they are being redirected.  As such they could very well deside that
-the redirect is illegitimate and not actually continue on filling out there credentials at our phishing site we have redirected them onto.  That is were css injection
-comes into play.  Though css injection is many times diregarded as useless, what interesting thing you can do with css is desplay text.  Take the following poc for example:
-const style = document.createElement('style');
+      <h1>Step 3 - increasing exploit believability and impact with css injection.</h1>
+      <p>The issue with the 2 exploits above is that it gives the user no reason to understand WHY they are being redirected.  As such they could very well deside that
+the redirect is illegitimate and not actually continue on filling out there credentials at our phishing site we have redirected them onto.</p>
+      <p>That is were css injection
+comes into play.  Though css injection is many times diregarded as useless, what interesting thing you can do with css is desplay text.  Take the following poc for example:</p>
+      <p><code>const style = document.createElement('style');
 style.id = 'poc-css-test';
 style.textContent = `
   .error.bad-login {
@@ -224,17 +255,17 @@ style.textContent = `
     content: "Due to updates, the login page is being temporarly migrated to attacker.com.  Redirecting now...";
   }
 `;
-document.head.appendChild(style);
-As you can see with just native css, one can display text on a page.  The issue is, from the raw url there didnt appear to be any place to inject my css into.  Thankfully,
+document.head.appendChild(style);</code></p>
+      <p>As you can see with just native css, one can display text on a page.  The issue is, from the raw url there didnt appear to be any place to inject my css into.</p>
+      <p>Thankfully,
 I did a little more digging and came across something very interesting.  Within the js on the site, another parameter was mentioned to be enabled, and yet not used by default...
-and its name was css=.  This was basicly a gold mine for me, as it allowed me to input any attacke, and it would load on the site!  
-
-Chaining all the exploits together, one can send over a link to the company login page that:
+and its name was css=.  This was basicly a gold mine for me, as it allowed me to input any attacke, and it would load on the site!</p>
+      <p>Chaining all the exploits together, one can send over a link to the company login page that:
  - redirects users to an attacker phishing page
  - before redirecting let the user know about the redirection, one can put any pretext they want here</p>
 
-      <h1 style="text-align: center;">What I learned:</h1>
-      <p style="white-space: pre-line;"> - even the most random knowledge can be helpful in web hacking, like the zero width spaces
+      <h1>What I learned:</h1>
+      <p> - even the most random knowledge can be helpful in web hacking, like the zero width spaces
  - investigate page js well for hidden values, they can be very useful
  - the company I report to doesnt take client side bugs :(</p>
     </div>
